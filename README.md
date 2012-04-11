@@ -1,54 +1,43 @@
-Capistrano Deployment Tags
-==========================
-This plugin to Capistrano will add timestamped and latest Git tags
-at each deployment, automatically.  It is intended to be used with
-the multistage recipe and will tag each release by environment.
-You can, however, use it without multistage simply by setting :branch
-and :stage in your recipe.
+Capistrano Detect Migrations
+============================
+This plugin to Capistrano leverages the capistrano-detect-migrations plugin
+to have Git identify Rails migrations before you deploy code to any
+remote systems. This is handy in an environment where you deploy
+often and want to release the newest code but only if it's not
+complicated by running migrations. You may also just want a list
+of migrations that will need to be run before deploying and this
+plugin makes that easy.
 
 What It Does
 ------------
-Simply: it makes it so you can track your deployments from Git.
-If I were to issue the command:
+It makes it automatic to detect pending migrations in any environment.
+You won't be surprised by deploying code that doesn't work until
+the migrations have been run.  If I were to issue the command:
 
 `cap production deploy`
 
-This would result in one new git tag with the environment and
-timestamp:
-
-`production-2012.04.02-203155`
-
-It would also result in moving or creating this tag:
-
-`production-latest`
-
-These tags can be used for any number of useful things including
-generating statistics about deployments per day/week/year, tracking
-code size over a period of time, detecting Rails migrations, and
-probably a thousand other things I haven't thought of.
+This would compare the current changes with the most recent deployment
+tag for the environment (here: production) and look for any migrations
+that have appeared or changed in the code since the last run. You
+are then presented with a prompt allowing you to cancel the deployment
+after reviewing the list of migrations.
 
 Usage
 -----
-capistrano-deploytags is available on
-[rubygems.org](https://rubygems.org/gems/capistrano-deploytags).
+capistrano-detect-migrations is available on
+[rubygems.org](https://rubygems.org/gems/capistrano-detect-migrations).
 You can install it from there with:
 
-`gem install capistrano-deploytags`
+`gem install capistrano-detect-migrations`
 
 If you use Bundler, be sure to add the gem to your Gemfile.
 In your Capistrano `config/deploy.rb` you should add:
 
-`require 'capistrano-deploytags'`
+`require 'capistrano-detect-migrations'`
 
-This will create two tasks, one that runs before deployment and one
-that runs after.
-
-NOTE: You will be creating and pushing tags from the version of the
-code in the current checkout. This plugin needs to be run from a
-clean checkout of your codebase. You should be deploying from a
-clean checkout anyway, so in most cases this is not a restriction
-on how you already do things. The plugin will check if your code
-is clean and complain if it is not.
+This will create one task that hooks into one of the tasks installed
+by the capistrano-deploytags gem. You can always review tasks that
+have been added by running `cap -T` from your application directory.
 
 Credits
 -------
