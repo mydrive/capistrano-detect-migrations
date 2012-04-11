@@ -17,7 +17,7 @@ module Capistrano
 
     def self.load_into(configuration)
       configuration.load do
-        after 'git:prepare_tree', 'git:detection_migrations'
+        after 'git:prepare_tree', 'git:detect_migrations'
 
         desc 'check for pending Rails migrations with git'
         namespace :git do
