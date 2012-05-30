@@ -8,7 +8,7 @@ module Capistrano
     end
 
     def pending_migrations?
-      !(`git diff --shortstat #{cdt.last_git_tag_for(stage)} #{branch} db/migrate`.strip.empty?)
+      !(`git diff --shortstat #{last_git_tag_for(stage)} #{branch} db/migrate`.strip.empty?)
     end
     
     def show_pending_migrations
