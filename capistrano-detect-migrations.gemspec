@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'capistrano-detect-migrations'
-  s.version     = '0.5.1'
+  s.version     = '0.6.0'
   s.date        = '2012-04-11'
   s.summary     = "Detect pending Rails migrations with Git before you deploy."
   s.description = <<-EOS 
