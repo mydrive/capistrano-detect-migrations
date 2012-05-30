@@ -1,6 +1,6 @@
 Capistrano Detect Migrations
 ============================
-This plugin to Capistrano leverages the capistrano-detect-migrations plugin
+This plugin to Capistrano leverages the capistrano-deploytags plugin
 to have Git identify Rails migrations before you deploy code to any
 remote systems. This is handy in an environment where you deploy
 often and want to release the newest code but only if it's not
