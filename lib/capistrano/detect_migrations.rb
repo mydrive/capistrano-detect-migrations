@@ -16,7 +16,7 @@ module Capistrano
     end
 
     def approved?
-      $stdin.gets.strip == 'Y'
+      $stdin.gets.strip.downcase == 'y'
     end
 
     def self.load_into(configuration)
