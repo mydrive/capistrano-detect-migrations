@@ -32,7 +32,7 @@ describe Capistrano::DetectMigrations do
   context "with a clean git tree" do
     it "raises an error if :stage or :branch are undefined" do
       with_clean_repo do
-        lambda { configuration.find_and_execute_task('git:detect_migrations') }.should raise_error('define :branch or :stage')
+        expect { configuration.find_and_execute_task('git:detect_migrations') }.to raise_error('define :branch or :stage')
       end
     end
 
@@ -40,7 +40,7 @@ describe Capistrano::DetectMigrations do
       with_clean_repo do
         set_branch_and_stage
         configuration.cdm.stub(:approved?).and_return(true)
-        lambda { configuration.find_and_execute_task('git:detect_migrations') }.should_not raise_error
+        expect { configuration.find_and_execute_task('git:detect_migrations') }.to_not raise_error
       end
     end
 
@@ -48,7 +48,7 @@ describe Capistrano::DetectMigrations do
       with_clean_repo do
         set_branch_and_stage
         configuration.cdm.should_receive(:approved?).and_return(false)
-        lambda { configuration.find_and_execute_task('git:detect_migrations') }.should raise_error('aborted deployment')
+        expect { configuration.find_and_execute_task('git:detect_migrations') }.to raise_error('aborted deployment')
       end
     end
   end
