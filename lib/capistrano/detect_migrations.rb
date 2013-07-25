@@ -4,13 +4,13 @@ module Capistrano
   module DetectMigrations
 
     def last_git_tag_for(stage)
-      `git tag -l #{stage}-[0-9]*`.split(/\n/).last
+      `git tag -l #{stage}-[0-9]*.[0-9]*.[0-9]*[-_][0-9]*`.split(/\n/).last
     end
 
     def pending_migrations?
       !(`git diff --shortstat #{last_git_tag_for(stage)} #{branch} db/migrate`.strip.empty?)
     end
-    
+
     def show_pending_migrations
       cdt.safe_run 'git', 'diff', '--summary', '--color', last_git_tag_for(stage), branch, 'db/migrate'
     end
@@ -30,7 +30,7 @@ module Capistrano
             if cdm.pending_migrations?
               logger.log Logger::IMPORTANT, "Pending migrations!!!"
               cdm.show_pending_migrations
-          
+
               $stdout.puts "Do you want to continue deployment? (Y/N)"
               unless cdm.approved?
                 logger.log Logger::IMPORTANT, "Aborting deployment!"
