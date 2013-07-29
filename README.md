@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/mydrive/capistrano-detect-migrations.png)](https://travis-ci.org/mydrive/capistrano-detect-migrations)
 Capistrano Detect Migrations
 ============================
 This plugin to Capistrano leverages the capistrano-deploytags plugin
